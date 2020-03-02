@@ -13,20 +13,26 @@
         </div>
         <!-- 控制区域 -->
         <div class="control-zone">
-            <b-button class="control-button" @click="goBack">Back</b-button>
-            <b-button 
-                v-for="(item,index) of buttonTextList" 
-                v-bind:key="index" 
-                :class="['data-button',{'active-b' : activeButton == index}]" 
-                @click="chooseLevel(index)"
-            >
-                {{item}}
-            </b-button>
-            <b-button class="control-button" @click="goNext">
-                {{
-                 dataList.length-1 > currentIndex   ? `${currentIndex+1} / ${dataList.length}` : 'submit data'
-                }}
-            </b-button>
+            <div class="button-group">
+                <b-button class="control-button" @click="goBack">Back</b-button>
+                <b-button 
+                    v-for="(item,index) of buttonTextList" 
+                    v-bind:key="index" 
+                    :class="['data-button',{'active-b' : activeButton == index}]" 
+                    @click="chooseLevel(index)"
+                >
+                    {{item}}
+                </b-button>
+                <b-button class="control-button" @click="goNext">
+                    {{
+                    dataList.length-1 > currentIndex   ? 'Next' : 'submit data'
+                    }}
+                </b-button>
+            </div>
+            <!-- 进度展示 -->
+            <div class="progress-line">
+                {{`${currentIndex+1} / ${dataList.length}`}}
+            </div>
         </div>
     </div>
 </template>
@@ -210,14 +216,23 @@ export default {
     .control-zone {
         width: 100%;
         box-sizing: border-box;
-        padding: 0rem 5rem;
+        padding: 10px 5rem;
         height: 10vh;
+        background-color: #777876;
         // position: absolute;
-        display: flex;
-        align-items: center;
-        background-color: #635e5e;
-        justify-content: space-between;
         // bottom: 5vh;
+        .button-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .progress-line {
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+            // border: 2px solid #fff;
+        }
         .data-button {
             background-color: #635e5e;
             color: #fff;
@@ -243,9 +258,9 @@ export default {
                 display: block;
                 position: absolute;
                 top: 45vh;
-                // left: -5vw;
-                width: 90vh;
-                transform: rotate(55deg);
+                left: -10vh;
+                width: 112vh;
+                transform: rotate(50deg);
                 height: 1rem;
                 background-color: #000;
             }
@@ -253,9 +268,9 @@ export default {
                 display: block;
                 position: absolute;
                 top: 45vh;
-                // left: -5vw;
-                width: 90vh;
-                transform: rotate(-55deg);
+                left: -10vh;
+                width: 112vh;
+                transform: rotate(-50deg);
                 height: 1rem;
                 background-color: #000;
             }
