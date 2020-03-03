@@ -4,6 +4,7 @@ import Entry from '../views/Entry.vue'
 import Experiment from '../views/Experiment.vue'
 import Justify from '../views/Justify.vue'
 import Data from '../views/DataStatic.vue'
+import Test from '../views/Test.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/data',
       name: 'Data',
       component: Data
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test
     }
   ]
 })

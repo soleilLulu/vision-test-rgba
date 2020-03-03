@@ -48,6 +48,7 @@ function Workbook () {
   this.Sheets = {}
 }
 
+// 暴露出去的转换味excel的方法
 export const toExcel = ({th, data, fileName, fileType, sheetName}) => {
   data.unshift(th)
   const wb = new Workbook()
@@ -61,14 +62,23 @@ export const toExcel = ({th, data, fileName, fileType, sheetName}) => {
   saveAs(new Blob([s2ab(wbout)], {type: 'application/octet-stream'}), `${fileName}.${fileType}`)
 }
 
-
-export const getRandomExperimentData = (num) => {
+// 从数组中获取指定数量的随机实验数据
+export const getRandomExperimentData = (num,targetData) => {
     let randomData = []
-    let totalDataLength = data && data.length
-
-    for(let i=0;i<num;i++){
-        randomData.push(data[parseInt(Math.random()*(totalDataLength),10)])
+    let totalDataLength = 0
+    if(targetData && targetData.length > num){
+        // 从指定的数据组中取随机数据
+        totalDataLength = targetData && targetData.length
+        for(let i=0;i<num;i++) {
+            randomData.push(targetData[parseInt(Math.random()*(totalDataLength),10)])
+        }
+    }else {
+        // 从全部实验样本中取随机数据
+        totalDataLength = data && data.length
+        for(let i=0;i<num;i++){
+            randomData.push(data[parseInt(Math.random()*(totalDataLength),10)])
+        }
     }
-    console.log(randomData)
+    // console.log(randomData)
     return randomData
 }

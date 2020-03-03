@@ -31,7 +31,7 @@
             </div>
             <!-- 进度展示 -->
             <div class="progress-line">
-                {{`${currentIndex+1} / ${dataList.length}`}}
+                {{currentIndex >= 3 ? `${currentIndex-2} / ${dataList.length-3}` : `test ${currentIndex+1}`}}   
             </div>
         </div>
     </div>
@@ -93,7 +93,28 @@ export default {
         }
     },
     mounted() {
-       this.dataList = getRandomExperimentData(10)
+        // 测试组数据
+        let testDataList = getRandomExperimentData(3)
+        // 实际实验数据
+       let actualDataList = getRandomExperimentData(300)
+       // 重复组数据
+       let repeatDataList = getRandomExperimentData(15,actualDataList)
+       this.dataList = testDataList.concat(actualDataList).concat(repeatDataList)
+    //    let testDataListIndex = []
+    //    for(let item of testDataList){
+    //        testDataListIndex.push(item.Id)
+    //    }
+    //     let actualDataListIndex = []
+    //     for(let item of actualDataList){
+    //        actualDataListIndex.push(item.Id)
+    //    }
+    //     let repeatDataListIndex = []
+    //     for(let item of repeatDataList){
+    //        repeatDataListIndex.push(item.Id)
+    //    }
+    //    console.log(testDataListIndex)
+    //    console.log(actualDataListIndex)
+    //    console.log(repeatDataListIndex)
        // 用户信息
        this.userInfo = this.$route.params.userInfo
        if(!this.userInfo){
@@ -124,23 +145,25 @@ export default {
                 })
                 return 
             }
-            // 把结果存进结果数组 如果有相同位置的 要覆盖掉
-            let currentDataObject = this.dataList[this.currentIndex]
-            this.resList[this.currentIndex] = {
-                "dataset_id": currentDataObject.id,
-                "targetR" : currentDataObject.Ta,
-                "targetG" : currentDataObject.Tb,
-                "targetB" : currentDataObject.Tc,
-                "referenceR" :currentDataObject.Ra,
-                "referenceG" : currentDataObject.Rb,
-                "referenceB" : currentDataObject.Rc,
-                "backgroundR" : currentDataObject.Ba,
-                "backgroundG" : currentDataObject.Bb,
-                "backgroundB" : currentDataObject.Bc,
-                "user_name" : this.userInfo.name,
-                "user_age" : this.userInfo.age,
-                "user_gender" : this.userInfo.gender,
-                "result" : this.activeButton+1 
+            if(this.currentIndex >= 3){
+                // 把结果存进结果数组 如果有相同位置的 要覆盖掉
+                let currentDataObject = this.dataList[this.currentIndex]
+                this.resList[this.currentIndex-3] = {
+                    "dataset_id": currentDataObject.Id,
+                    "targetR" : currentDataObject.Ta,
+                    "targetG" : currentDataObject.Tb,
+                    "targetB" : currentDataObject.Tc,
+                    "referenceR" :currentDataObject.Ra,
+                    "referenceG" : currentDataObject.Rb,
+                    "referenceB" : currentDataObject.Rc,
+                    "backgroundR" : currentDataObject.Ba,
+                    "backgroundG" : currentDataObject.Bb,
+                    "backgroundB" : currentDataObject.Bc,
+                    "user_name" : this.userInfo.name,
+                    "user_age" : this.userInfo.age,
+                    "user_gender" : this.userInfo.gender,
+                    "result" : this.activeButton+1 
+                }
             }
             if(this.currentIndex < this.dataList.length-1){
                 // 索引加一
@@ -152,7 +175,7 @@ export default {
 
                 //分割实验数据
                 let length = this.resList.length;
-                console.log(length)
+                // console.log(length)
                 let perListLength = length / 3;
                 let dataList1 = this.resList.slice(0,perListLength);
                 let dataList2 = this.resList.slice(perListLength,perListLength*2);
@@ -234,7 +257,7 @@ export default {
             // border: 2px solid #fff;
         }
         .data-button {
-            background-color: #635e5e;
+            background-color: #777876;
             color: #fff;
             font-weight: bold;
             border: 0px;
@@ -281,7 +304,7 @@ export default {
     }
     .control-button {
         border: 1px solid #fff;
-        background-color: #635e5e;
+        background-color: #777876;
         color: #fff;
         font-weight: bold;
     }
