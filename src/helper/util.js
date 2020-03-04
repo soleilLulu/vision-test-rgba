@@ -1,4 +1,4 @@
-import data from '../data/data'
+import EXPERIMENT_DATA from '../data/data'
 import XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
 
@@ -66,19 +66,33 @@ export const toExcel = ({th, data, fileName, fileType, sheetName}) => {
 export const getRandomExperimentData = (num,targetData) => {
     let randomData = []
     let totalDataLength = 0
+    let hash = {}
     if(targetData && targetData.length > num){
         // 从指定的数据组中取随机数据
         totalDataLength = targetData && targetData.length
         for(let i=0;i<num;i++) {
-            randomData.push(targetData[parseInt(Math.random()*(totalDataLength),10)])
+          let randomIndex = generateRadomNum(totalDataLength)
+          while(hash[randomIndex]) {
+            randomIndex = generateRadomNum(totalDataLength)
+          }
+          hash[randomIndex] = true
+          randomData.push(targetData[randomIndex])
         }
     }else {
         // 从全部实验样本中取随机数据
-        totalDataLength = data && data.length
+        totalDataLength = EXPERIMENT_DATA.length
         for(let i=0;i<num;i++){
-            randomData.push(data[parseInt(Math.random()*(totalDataLength),10)])
+            let randomIndex = generateRadomNum(totalDataLength)
+            while(hash[randomIndex]){          
+              randomIndex = generateRadomNum(totalDataLength)
+            }
+            hash[randomIndex] = true
+            randomData.push(EXPERIMENT_DATA[randomIndex])
         }
     }
-    // console.log(randomData)
     return randomData
+}
+
+function generateRadomNum (max) {
+  return parseInt(Math.random()*(max),10)
 }

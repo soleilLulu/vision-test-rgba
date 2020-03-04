@@ -13,8 +13,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 body {
   margin: 0;
+  &:-webkit-scrollbar {
+    width: 0 !important;
+  }
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
 }
 </style>

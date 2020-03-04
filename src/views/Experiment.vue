@@ -112,8 +112,11 @@ export default {
     //     for(let item of repeatDataList){
     //        repeatDataListIndex.push(item.Id)
     //    }
+    //    console.log('>>测试组ID')
     //    console.log(testDataListIndex)
+    //    console.log('>>实验组ID')
     //    console.log(actualDataListIndex)
+    //    console.log('>>重复组ID')
     //    console.log(repeatDataListIndex)
        // 用户信息
        this.userInfo = this.$route.params.userInfo
