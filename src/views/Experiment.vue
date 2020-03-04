@@ -271,6 +271,7 @@ export default {
         width: 100%;
         display: flex;
         height: 90vh;
+        overflow: hidden;
         .test-panel {
             width: 50%;
             position: relative;
@@ -281,8 +282,8 @@ export default {
                 display: block;
                 position: absolute;
                 top: 45vh;
-                left: -10vh;
-                width: 112vh;
+                left: -9vw;
+                width: 68vw;
                 transform: rotate(50deg);
                 height: 1rem;
                 background-color: #000;
@@ -291,8 +292,8 @@ export default {
                 display: block;
                 position: absolute;
                 top: 45vh;
-                left: -10vh;
-                width: 112vh;
+                left: -9vw;
+                width: 68vw;
                 transform: rotate(-50deg);
                 height: 1rem;
                 background-color: #000;

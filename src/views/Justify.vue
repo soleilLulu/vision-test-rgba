@@ -40,7 +40,7 @@ export default {
             }
             setTimeout(() => {
                 this.showEnterButton = true
-            },60000)
+            },600)
         }
     }
 }
