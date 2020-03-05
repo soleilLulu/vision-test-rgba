@@ -40,7 +40,7 @@ export default {
             }
             setTimeout(() => {
                 this.showEnterButton = true
-            },600)
+            },60000)
         }
     }
 }
@@ -52,20 +52,13 @@ export default {
     box-sizing: border-box;
     position: relative;
     padding: 4rem 5rem;
-    background-image: url('../assets/justify_bg.jpeg');
+    background-image: url('../assets/intro_bg.jpg');
     background-size: 100% 100%;
-    // background-color: #e5e5e5;
-    // .experiment-info {
-    //     font-size: 1.5rem;
-    // }
     .go-test-group {
         position: absolute;
-        bottom: 30vh;
+        bottom: 5vh;
         left: 50%;
         transform: translate(-50%);
-        .goTest {
-            margin-top: 2rem;
-        }
     }
 }
 </style>

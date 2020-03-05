@@ -27,6 +27,7 @@ export default {
     data() {
         return {
             resList: [],
+            isSubmitting: false
         }
     },
     methods: {
@@ -37,30 +38,36 @@ export default {
             }
         },
         submitInfo() {
+            if(this.isSubmitting)return 
+            this.isSubmitting = true
             this.generateDataList(315)
-            let length = this.resList.length
-            // 测试提交
-            let perListLength = length / 3;
+            let length = this.resList.length;
+            let perListLength = length / 2;
             let dataList1 = this.resList.slice(0,perListLength);
-            let dataList2 = this.resList.slice(perListLength,perListLength*2);
-            let dataList3 = this.resList.slice(perListLength*2);
+            let dataList2 = this.resList.slice(perListLength);
 
-            let promise1 = submitExperimentInfo(dataList1)
-            let promise2 = submitExperimentInfo(dataList2)
-            let promise3 = submitExperimentInfo(dataList3)
-
-            Promise.all([promise1,promise2,promise3]).then(res => {
-                console.log(res)
-                this.$buefy.toast.open({
-                    message: 'submit success',
-                    type: 'is-success'
+            submitExperimentInfo(dataList1).then(() => {
+                submitExperimentInfo(dataList2).then(() => {
+                    this.isSubmitting = false 
+                    this.$buefy.toast.open({
+                        message: 'submit success',
+                        type: 'is-success'
+                    })
+                }).catch(e => {
+                    this.$buefy.toast.open({
+                        message: 'there is something wrong,please try submit again',
+                        type: 'is-danger'
+                    })
+                    this.isSubmitting = false  
+                    console.error(e)               
                 })
             }).catch(e => {
-                console.error(e)
-                 this.$buefy.toast.open({
-                    message: 'submit fail',
+                this.$buefy.toast.open({
+                    message: 'there is something wrong,please try submit again',
                     type: 'is-danger'
-                })               
+                })
+                this.isSubmitting = false
+                console.error(e)  
             })
         }
     }

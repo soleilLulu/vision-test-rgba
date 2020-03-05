@@ -49,6 +49,11 @@ const buttonTextList = [
     '6.extremely large'
 ]
 
+// 实验组数
+const EXPERIMENT_GROUP_NUM = 300
+const TEST_GROUP_NUM  = 3
+const REPEAT_GROUP_NUM = 15
+
 export default {
     data() {
         return {
@@ -94,11 +99,11 @@ export default {
     },
     mounted() {
         // 测试组数据
-        let testDataList = getRandomExperimentData(3)
+        let testDataList = getRandomExperimentData(TEST_GROUP_NUM)
         // 实际实验数据
-       let actualDataList = getRandomExperimentData(300)
+       let actualDataList = getRandomExperimentData(EXPERIMENT_GROUP_NUM)
        // 重复组数据
-       let repeatDataList = getRandomExperimentData(15,actualDataList)
+       let repeatDataList = getRandomExperimentData(REPEAT_GROUP_NUM,actualDataList)
        this.dataList = testDataList.concat(actualDataList).concat(repeatDataList)
     //    let testDataListIndex = []
     //    for(let item of testDataList){
@@ -176,53 +181,39 @@ export default {
                 if(this.isSubmitting)return 
                 this.isSubmitting = true
 
-                //分割实验数据
                 let length = this.resList.length;
-                // console.log(length)
-                let perListLength = length / 3;
+                let perListLength = length / 2;
                 let dataList1 = this.resList.slice(0,perListLength);
-                let dataList2 = this.resList.slice(perListLength,perListLength*2);
-                let dataList3 = this.resList.slice(perListLength*2);
+                let dataList2 = this.resList.slice(perListLength);
 
-                let promise1 = submitExperimentInfo(dataList1)
-                let promise2 = submitExperimentInfo(dataList2)
-                let promise3 = submitExperimentInfo(dataList3)
-
-                Promise.all([promise1,promise2,promise3]).then(res => {
-                    console.log(res)
-                    this.$buefy.toast.open({
-                        message: 'submit success',
-                        type: 'is-success'
-                    })
-                    setTimeout(() => {
-                        this.isSubmitting = false
-                        this.$router.push({
-                            name: 'Entry'
+                submitExperimentInfo(dataList1).then(() => {
+                    submitExperimentInfo(dataList2).then(() => {
+                        this.$buefy.toast.open({
+                            message: 'submit success',
+                            type: 'is-success'
                         })
-                    },2000)
+                        setTimeout(() => {
+                            this.isSubmitting = false
+                            this.$router.push({
+                                name: 'Entry'
+                            })
+                        },3000)
+                    }).catch(e => {
+                        this.$buefy.toast.open({
+                            message: 'there is something wrong,please try submit again',
+                            type: 'is-danger'
+                        })
+                        this.isSubmitting = false  
+                        console.error(e)                
+                    })
+                }).catch(e => {
+                    this.$buefy.toast.open({
+                        message: 'there is something wrong,please try submit again',
+                        type: 'is-danger'
+                    })
+                    this.isSubmitting = false
+                    console.error(e)  
                 })
-                // 最后提交
-                // submitExperimentInfo(this.resList).then((res) => {
-                //     if(res.status == '200'){
-                //         this.$buefy.toast.open({
-                //             message: 'submit success',
-                //             type: 'is-success'
-                //         })
-                //         setTimeout(() => {
-                //             this.isSubmitting = false
-                //             this.$router.push({
-                //                 name: 'Entry'
-                //             })
-                //         },2000)
-                //     }else {
-                //         this.$buefy.toast.open({
-                //             message: 'there is something wrong,please try again later',
-                //             type: 'is-danger'
-                //         })
-                //         this.isSubmitting = false
-                //     }
-
-                // })
             }
         },
         // 选择等级
