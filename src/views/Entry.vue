@@ -18,6 +18,9 @@
         <b-field label="Age">
             <b-input v-model="age" type="number"></b-input>
         </b-field>  
+        <b-field label="University">
+            <b-input v-model="university"></b-input>
+        </b-field>
         <div class="button-div">
             <b-button type="is-primary" @click="goPrepare">Enter experiment</b-button> 
         </div>    
@@ -29,7 +32,8 @@ export default {
         return {
             name: '',
             gender: '',
-            age: ''
+            age: '',
+            university: ''
         }
     },
     methods: {
@@ -55,11 +59,18 @@ export default {
                 }) 
                 return                  
             }
+            if(!this.university) {
+                this.$buefy.toast.open({
+                    message: 'University is empty',
+                    type: 'is-danger'
+                }) 
+                return                  
+            }
             // 进入实验准备页
             this.$router.push({
                 name: 'Justify',
                 params: {
-                    name: this.name,
+                    name: this.name.concat(this.university),
                     gender: this.gender,
                     age: this.age
                 }

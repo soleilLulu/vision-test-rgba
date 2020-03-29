@@ -44,15 +44,15 @@ const buttonTextList = [
     '1.no',
     '2.just noticeable',
     '3.small',
-    '4.acceptable',
+    '4.medium',
     '5.large',
     '6.extremely large'
 ]
 
 // 实验组数
-const EXPERIMENT_GROUP_NUM = 300
+const EXPERIMENT_GROUP_NUM = 450
 const TEST_GROUP_NUM  = 3
-const REPEAT_GROUP_NUM = 15
+const REPEAT_GROUP_NUM = 50
 
 export default {
     data() {
