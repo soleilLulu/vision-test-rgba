@@ -14,9 +14,9 @@
         <!-- 控制区域 -->
         <div class="control-zone">
             <div class="button-group">
-                <b-button class="control-button" @click="goBack">Back</b-button>
+                <b-button class="control-button" @click="goBack">{{this.L_Back}}</b-button>
                 <b-button 
-                    v-for="(item,index) of buttonTextList" 
+                    v-for="(item,index) of this.buttonTextList" 
                     v-bind:key="index" 
                     :class="['data-button',{'active-b' : activeButton == index}]" 
                     @click="chooseLevel(index)"
@@ -25,13 +25,13 @@
                 </b-button>
                 <b-button class="control-button" @click="goNext">
                     {{
-                    dataList.length-1 > currentIndex   ? 'Next' : 'submit data'
+                    dataList.length-1 > currentIndex   ? this.L_Next : this.L_Submit
                     }}
                 </b-button>
             </div>
             <!-- 进度展示 -->
             <div class="progress-line">
-                {{currentIndex >= 3 ? `${currentIndex-2} / ${dataList.length-3}` : `test ${currentIndex+1}`}}   
+                {{currentIndex >= 3 ? `${currentIndex-2} / ${dataList.length-3}` : `${this.L_Test} ${currentIndex+1}` }}   
             </div>
         </div>
     </div>
@@ -40,14 +40,6 @@
 import {getRandomExperimentData} from '../helper/util'
 import {submitExperimentInfo} from '../api'
 
-const buttonTextList = [
-    '1.no',
-    '2.just noticeable',
-    '3.small',
-    '4.medium',
-    '5.large',
-    '6.extremely large'
-]
 
 // 实验组数
 const EXPERIMENT_GROUP_NUM = 450
@@ -60,10 +52,21 @@ export default {
             dataList: [],
             currentIndex: 0,
             activeButton: -1,
-            buttonTextList,
             resList: [],
             userInfo: {},
-            isSubmitting: false
+            isSubmitting: false,
+            L_Back: 'Back',
+            L_Next: 'Next',
+            L_Submit: 'Submit',
+            L_Test: 'Test',
+            buttonTextList: [
+                '1.no',
+                '2.just noticeable',
+                '3.small',
+                '4.medium',
+                '5.large',
+                '6.extremely large'
+            ]
         }
     },
     computed: {
@@ -130,6 +133,21 @@ export default {
                name: 'Entry'
            })
        }
+       if(this.userInfo.language == 'Chinese'){
+           this.buttonTextList = [
+                '1.没有色差',
+                '2.刚刚能够察觉到色差',
+                '3.小色差',
+                '4.中色差',
+                '5.大色差',
+                '6.非常大的色差'
+            ]
+            this.L_Back = '上一组',
+            this.L_Next = '下一组',
+            this.L_Submit = '上传数据',
+            this.L_Test = '练习'
+       }
+       
     },
     methods: {
         // 返回上一组
@@ -192,12 +210,12 @@ export default {
                             message: 'submit success',
                             type: 'is-success'
                         })
-                        setTimeout(() => {
-                            this.isSubmitting = false
-                            this.$router.push({
-                                name: 'Entry'
-                            })
-                        },3000)
+                        // setTimeout(() => {
+                        //     this.isSubmitting = false
+                        //     this.$router.push({
+                        //         name: 'Entry'
+                        //     })
+                        // },3000)
                     }).catch(e => {
                         this.$buefy.toast.open({
                             message: 'there is something wrong,please try submit again',

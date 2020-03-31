@@ -1,19 +1,22 @@
 <template>
-    <div class="entry-container">
+    <div class="entry-container" :style="`background-image: url('${this.address}')`">
         <div class="experiment-info">
             <div class="go-test-group">
                 <!-- 实验展示图片 -->
-                <b-button v-if="showEnterButton" class="goTest" type="is-primary" @click="startTest">Enter experiment</b-button>
+                <b-button v-if="showEnterButton" class="goTest" type="is-primary" @click="startTest">{{this.L_Enter}}</b-button>
             </div>
         </div>
     </div>
 </template>
 <script>
+const IMAGE_PREFIX = 'http://q81pwdif0.bkt.clouddn.com'
 export default {
     data() {
         return {
             userInfo: {},
-            showEnterButton: false
+            showEnterButton: false ,
+            L_Enter: 'Enter experiment',
+            address: `${IMAGE_PREFIX}/E.jpg`,
         }
     },
     methods: {
@@ -37,10 +40,20 @@ export default {
                 name: this.$route.params.name,
                 gender: this.$route.params.gender,
                 age: this.$route.params.age,
+                language: this.$route.params.language,
             }
             setTimeout(() => {
                 this.showEnterButton = true
-            },60000)
+            },600)
+        }
+        console.log(this.$route.params.language)
+        let str = this.$route.params.language
+        if (str == 'Chinese'){
+            this.address = `${IMAGE_PREFIX}/C.jpg`
+            this.L_Enter = '进入实验'
+        }else {
+            this.address = `${IMAGE_PREFIX}/E.jpg`
+            this.L_Enter = 'Enter experiment'
         }
     }
 }
@@ -52,7 +65,6 @@ export default {
     box-sizing: border-box;
     position: relative;
     padding: 4rem 5rem;
-    background-image: url('../assets/intro_bg.jpg');
     background-size: 100% 100%;
     .go-test-group {
         position: absolute;
