@@ -16,7 +16,7 @@ export default {
             userInfo: {},
             showEnterButton: false ,
             L_Enter: 'Enter experiment',
-            address: `${IMAGE_PREFIX}/E.jpg`,
+            address: `${IMAGE_PREFIX}/EN.jpg`,
         }
     },
     methods: {
@@ -49,10 +49,10 @@ export default {
         console.log(this.$route.params.language)
         let str = this.$route.params.language
         if (str == 'Chinese'){
-            this.address = `${IMAGE_PREFIX}/C.jpg`
+            this.address = `${IMAGE_PREFIX}/CH.jpg`
             this.L_Enter = '进入实验'
         }else {
-            this.address = `${IMAGE_PREFIX}/E.jpg`
+            this.address = `${IMAGE_PREFIX}/EN.jpg`
             this.L_Enter = 'Enter experiment'
         }
     }
