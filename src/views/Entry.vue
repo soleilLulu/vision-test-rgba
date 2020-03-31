@@ -65,7 +65,7 @@ export default {
             this.L_Female = '女',
             this.L_Male = '男',
             this.L_Age = '年龄',
-            this.L_University = '学校',
+            this.L_University = '学校(请输入英文首字母简称)',
             this.L_Enter = '进入实验'
             
         },
@@ -76,7 +76,7 @@ export default {
             this.L_Female = 'Female',
             this.L_Male = 'Male',
             this.L_Age = 'Age',
-            this.L_University = 'University',
+            this.L_University = 'University(Please input the initials of your university)',
             this.L_Enter = 'Enter experiment'
             
         },        
