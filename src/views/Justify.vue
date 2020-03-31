@@ -44,7 +44,7 @@ export default {
             }
             setTimeout(() => {
                 this.showEnterButton = true
-            },600)
+            },60000)
         }
         console.log(this.$route.params.language)
         let str = this.$route.params.language
