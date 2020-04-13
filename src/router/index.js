@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Entry from '../views/Entry.vue'
-//import Close from '../views/Close.vue'
+//import Entry from '../views/Entry.vue'
+import Close from '../views/Close.vue'
 import Experiment from '../views/Experiment.vue'
 import Justify from '../views/Justify.vue'
 import Data from '../views/DataStatic.vue'
@@ -14,7 +14,7 @@ export default new Router({
     {
       path: '/',
       name: 'Entry',
-      component: Entry
+      component: Close
     },
     {
       path: '/experiment',
