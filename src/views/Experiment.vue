@@ -42,9 +42,9 @@ import {submitExperimentInfo} from '../api'
 
 
 // 实验组数
-const EXPERIMENT_GROUP_NUM = 450
+const EXPERIMENT_GROUP_NUM = 180
 const TEST_GROUP_NUM  = 3
-const REPEAT_GROUP_NUM = 50
+const REPEAT_GROUP_NUM = 20
 
 export default {
     data() {
